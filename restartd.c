@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
             printf("restartd %s - process restarter and checker daemon\n"
                     "Copyright 2000-2002 Tibor Koleszar <oldw@debian.org>\n"
                     "Copyright 2006 Aurélien GÉRÔME <ag@roxor.cx>\n"
+                    "Modified igrowing 2017.\n"
                     "restartd is GPL'ed software.\n"
                     "Parameters:\n"
                     "  -c <config_file> : config file (default is /etc/restartd.conf)\n"
@@ -244,9 +245,10 @@ int main(int argc, char *argv[])
                if (strlen(config_process[i].processes) > 0) {
                    if (strlen(config_process[i].running) > 0) {
                        strcpy(config_process[i].status, "running");
-                       syslog(LOG_INFO, "%s is running, executing '%s'",
+                       // Don't flood the /var/log/messages for normal flow.
+                       /*syslog(LOG_INFO, "%s is running, executing '%s'",
                               config_process[i].name,
-                              config_process[i].running);
+                              config_process[i].running);*/
                        system(config_process[i].running);
                     } else {
                         strcpy(config_process[i].status, "running");
